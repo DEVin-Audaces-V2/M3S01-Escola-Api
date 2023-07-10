@@ -11,7 +11,7 @@ namespace Escola.API.DataBase
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Password=P@ssword;Persist Security Info=True;User ID=sa;Initial Catalog=EscolaDB-Audaces;Data Source=tcp:localhost,1433");
+            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=escolaDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

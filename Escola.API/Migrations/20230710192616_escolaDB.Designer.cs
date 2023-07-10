@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Escola.API.Migrations
 {
     [DbContext(typeof(EscolaDbContexto))]
-    [Migration("20230704232531_atualizar")]
-    partial class atualizar
+    [Migration("20230710192616_escolaDB")]
+    partial class escolaDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,7 +30,6 @@ namespace Escola.API.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DataNascimento")
-                        .HasMaxLength(50)
                         .HasColumnType("datetime2")
                         .HasColumnName("DATA_NASCIMENTO");
 
@@ -69,6 +68,35 @@ namespace Escola.API.Migrations
                         .IsUnique();
 
                     b.ToTable("AlunoTB");
+                });
+
+            modelBuilder.Entity("Escola.API.Model.Turma", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Curso")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasDefaultValue("Curso Basico")
+                        .HasColumnName("CURSO");
+
+                    b.Property<string>("Nome")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("Nome");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Nome")
+                        .IsUnique()
+                        .HasFilter("[Nome] IS NOT NULL");
+
+                    b.ToTable("TURMA");
                 });
 #pragma warning restore 612, 618
         }
