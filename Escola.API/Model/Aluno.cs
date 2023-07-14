@@ -1,5 +1,6 @@
 ﻿using Escola.API.DTO;
 using System;
+using System.Collections.Generic;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Escola.API.Model
@@ -14,6 +15,8 @@ namespace Escola.API.Model
         public string Telefone { get; set; }
         public string Email { get; set; }
         public DateTime DataNascimento { get; set; }
+        public virtual List<Boletim> Boletins { get; set; }
+        public virtual List<Turma> Turmas { get; set; }
 
         public Aluno()
         {

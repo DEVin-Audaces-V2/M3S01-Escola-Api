@@ -8,6 +8,7 @@ namespace Escola.API.DataBase
         public virtual DbSet<Aluno> Alunos { get; set; }
 
         public virtual DbSet<Turma> Turmas { get; set; }
+        public virtual DbSet<AlunoTurma> AlunoTurma { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -74,18 +75,33 @@ namespace Escola.API.DataBase
 
 
             modelBuilder.Entity<Turma>().Property(x => x.Curso)
-                            .HasColumnType("varchar")
-                            .HasMaxLength(50)
-                            .HasDefaultValue("Curso Basico")
-                            .HasColumnName("CURSO");
+                                        .HasColumnType("varchar")
+                                        .HasMaxLength(50)
+                                        .HasDefaultValue("Curso Basico")
+                                        .HasColumnName("CURSO");
 
             modelBuilder.Entity<Turma>().Property(x => x.Nome)
-                            .HasColumnType("varchar")
-                            .HasMaxLength(50)
-                            .HasColumnName("Nome");
+                                        .HasColumnType("varchar")
+                                        .HasMaxLength(50)
+                                        .HasColumnName("Nome");
 
             modelBuilder.Entity<Turma>().HasIndex(x => x.Nome)
                                         .IsUnique();
+
+            modelBuilder.Entity<AlunoTurma>().ToTable("ALUNO_X_TURMA");
+
+            modelBuilder.Entity<AlunoTurma>().Property(x => x.AlunoId)
+                                            .HasColumnType("int")
+                                            .HasColumnName("ALUNO_ID");
+
+            modelBuilder.Entity<AlunoTurma>().Property(x => x.TurmaId)
+                                            .HasColumnType("int")
+                                            .HasColumnName("TURMA_ID");
+
+            modelBuilder.Entity<Aluno>().HasMany(x => x.Turmas)
+                                        .WithMany(x => x.Alunos)
+                                        .UsingEntity<AlunoTurma>(t => t.HasOne(x => x.Turma).WithMany().HasForeignKey(x => x.TurmaId),
+                                                                 a => a.HasOne(x => x.Aluno).WithMany().HasForeignKey(x => x.AlunoId));
 
         }
     }
