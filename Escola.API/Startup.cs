@@ -98,6 +98,12 @@ namespace Escola.API
 
             app.UseRouting();
 
+            app.UseCors(config =>
+            {
+                //config.AllowAnyOrigin();
+                config.WithOrigins("*");
+            });
+
             app.UseAuthorization();
             app.UseAuthentication();
 
